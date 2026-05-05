@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>سهلها - منظم مذاكرة طلاب جامعة أم القرى</title>
+<meta name="description" content="سهلها: منصة لطلاب جامعة أم القرى لتنظيم المذاكرة، مؤقت بومودورو، إدارة المواد، إحصائيات وأوسمة." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-blobs">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+  </div>
+
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar glass">
+      <div class="brand">
+        <div class="logo"><img src="logo.png" alt="سهلها" class="logo-img" /></div>
+        <div>
+          <h1>سهلها</h1>
+          <p>منظم مذاكرتك الذكي</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-link active" data-target="dashboard">🏠 لوحة التحكم</button>
+        <button class="nav-link" data-target="pomodoro">⏱️ مؤقت المذاكرة</button>
+        <button class="nav-link" data-target="subjects">📚 المواد</button>
+        <button class="nav-link" data-target="stats">📊 الإحصائيات</button>
+        <button class="nav-link" data-target="badges">🏅 الأوسمة</button>
+      </nav>
+
+      <div class="quick-links">
+        <h3>روابط سريعة</h3>
+        <a href="https://lms.uqu.edu.sa/ultra/course" target="_blank" rel="noopener">🎓 Blackboard UQU</a>
+        <a href="https://outlook.office.com" target="_blank" rel="noopener">✉️ البريد الجامعي</a>
+        <a href="https://uqu.edu.sa/" target="_blank" rel="noopener">📝 موقع الجامعة</a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <header class="topbar glass">
+        <button id="menuToggle" class="menu-toggle">☰</button>
+        <div class="greeting">
+          <h2 id="greetingText">أهلاً بك 👋</h2>
+          <p id="dateText"></p>
+        </div>
+        <div class="streak-pill">🔥 <span id="streakCount">0</span> يوم</div>
+      </header>
+
+      <!-- Dashboard -->
+      <section class="view active" id="dashboard">
+        <div class="cards-grid">
+          <div class="stat-card glass">
+            <span class="icon">⏰</span>
+            <div>
+              <p>إجمالي المذاكرة</p>
+              <h3><span id="totalMinutes">0</span> د</h3>
+            </div>
+          </div>
+          <div class="stat-card glass">
+            <span class="icon">📚</span>
+            <div>
+              <p>عدد المواد</p>
+              <h3 id="subjectsCount">0</h3>
+            </div>
+          </div>
+          <div class="stat-card glass">
+            <span class="icon">🍅</span>
+            <div>
+              <p>جلسات بومودورو</p>
+              <h3 id="sessionsCount">0</h3>
+            </div>
+          </div>
+          <div class="stat-card glass">
+            <span class="icon">🏅</span>
+            <div>
+              <p>الأوسمة المحققة</p>
+              <h3 id="badgesEarned">0</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="glass panel">
+            <h3>📌 الاختبارات القادمة</h3>
+            <ul id="upcomingExams" class="exam-list"><li class="empty">لا توجد اختبارات قادمة</li></ul>
+          </div>
+          <div class="glass panel">
+            <h3>💡 نصيحة اليوم</h3>
+            <p id="dailyTip" class="tip"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pomodoro -->
+      <section class="view" id="pomodoro">
+        <div class="pomodoro-wrap glass">
+          <div class="mode-tabs">
+            <button class="mode active" data-mode="focus">مذاكرة (25د)</button>
+            <button class="mode" data-mode="break">راحة (5د)</button>
+          </div>
+          <div class="timer-settings">
+            <label>وقت المذاكرة
+              <input id="focusLength" class="input small" type="number" min="5" max="180" value="25" /> د
+            </label>
+            <label>وقت الراحة
+              <input id="breakLength" class="input small" type="number" min="1" max="60" value="5" /> د
+            </label>
+          </div>
+          <div class="timer-ring">
+            <svg viewBox="0 0 200 200">
+              <circle cx="100" cy="100" r="90" class="ring-bg"/>
+              <circle cx="100" cy="100" r="90" class="ring-fg" id="ringFg"/>
+            </svg>
+            <div class="timer-text" id="timerText">25:00</div>
+          </div>
+          <div class="timer-controls">
+            <select id="timerSubject" class="select"></select>
+            <button id="startBtn" class="btn primary">▶ ابدأ</button>
+            <button id="pauseBtn" class="btn">⏸ إيقاف</button>
+            <button id="resetBtn" class="btn ghost">↺ تصفير</button>
+          </div>
+          <p class="hint">سيتم احتساب ساعات المذاكرة تلقائياً عند انتهاء جلسة المذاكرة.</p>
+        </div>
+      </section>
+
+      <!-- Subjects -->
+      <section class="view" id="subjects">
+        <div class="glass panel">
+          <div class="row">
+            <input id="newSubjectInput" class="input" placeholder="اسم المادة (مثال: حاسب 101)" />
+            <button id="addSubjectBtn" class="btn primary">➕ إضافة مادة</button>
+          </div>
+        </div>
+        <div id="subjectsList" class="subjects-grid"></div>
+      </section>
+
+      <!-- Stats -->
+      <section class="view" id="stats">
+        <div class="glass panel">
+          <h3>📊 إحصائيات المذاكرة</h3>
+          <div class="stats-summary">
+            <div class="summary-card">
+              <strong id="statsTotalTime">0 د</strong>
+              <span>إجمالي الوقت</span>
+            </div>
+            <div class="summary-card">
+              <strong id="statsAverage">0 د</strong>
+              <span>متوسط الوقت لكل مادة</span>
+            </div>
+            <div class="summary-card">
+              <strong id="statsTopSubject">—</strong>
+              <span>أكثر مادة مذاكرة</span>
+            </div>
+          </div>
+          <div class="chart-panel">
+            <canvas id="statsChart" height="220"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Badges -->
+      <section class="view" id="badges">
+        <div class="badges-grid" id="badgesGrid"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
