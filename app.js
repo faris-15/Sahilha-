@@ -61,9 +61,57 @@ const TIPS = [
   'اشرح ما تعلمته بصوت عالٍ، فهي أفضل طريقة لاختبار فهمك.',
   'اشرب الماء بانتظام أثناء المذاكرة للحفاظ على التركيز.',
 ];
-function setTip(){
-  const i = new Date().getDate() % TIPS.length;
-  document.getElementById('dailyTip').textContent = TIPS[i];
+
+let _tipsList = null;
+let _tipIntervalId = null;
+
+function parseTipsFromText(text){
+  // Treat each non-empty line as a separate tip
+  return text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+}
+
+function pickRandomTipFromSegment(tips){
+  const n = tips.length;
+  if(n===0) return null;
+  if(n<3) return tips[Math.floor(Math.random()*n)];
+  const seg = Math.floor(Math.random()*3); // 0: start, 1: middle, 2: end
+  const segSize = Math.ceil(n/3);
+  const start = Math.min(seg * segSize, n-1);
+  const end = Math.min(start + segSize, n);
+  const idx = start + Math.floor(Math.random() * (end - start));
+  return tips[idx];
+}
+
+function updateTip(){
+  const el = document.getElementById('dailyTip');
+  const source = _tipsList && _tipsList.length ? _tipsList : TIPS;
+  const tip = pickRandomTipFromSegment(source) || '';
+  try{
+    el.style.transition = 'opacity .35s';
+    el.style.opacity = 0;
+    setTimeout(()=>{ el.textContent = tip; el.style.opacity = 1; }, 200);
+  }catch(e){
+    el.textContent = tip;
+  }
+}
+
+function initializeTips(){
+  // Clear any existing interval
+  if(_tipIntervalId) clearInterval(_tipIntervalId);
+
+  // Try loading `quist.txt` from the same folder
+  fetch('quist.txt').then(r=>{
+    if(!r.ok) throw new Error('no file');
+    return r.text();
+  }).then(txt=>{
+    _tipsList = parseTipsFromText(txt);
+  }).catch(()=>{
+    _tipsList = null; // fallback to built-in TIPS
+  }).finally(()=>{
+    updateTip();
+    // rotate every 2 minutes (120000 ms)
+    _tipIntervalId = setInterval(updateTip, 120000);
+  });
 }
 
 // ========= Streak =========
@@ -379,4 +427,4 @@ function renderAll(){
   if(document.getElementById('stats').classList.contains('active')) renderChart();
 }
 
-setGreeting(); setTip(); renderTimer(); renderAll();
+setGreeting(); initializeTips(); renderTimer(); renderAll();
