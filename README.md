@@ -32,7 +32,6 @@ Sahilha is an intuitive, student-centric web platform designed specifically for 
 - 🎯 **متابعة التقدم الأكاديمي** - Monitor your academic progress
 - 📊 **تحليلات الأداء** - Performance analytics and insights
 - 🔔 **إشعارات وتنبيهات** - Smart notifications and reminders
-- 🌍 **واجهة ثنائية اللغة** - Bilingual interface (Arabic & English)
 
 ---
 
@@ -95,20 +94,15 @@ Sahilha-/
 ## 👥 المساهمون | Contributors
 
 - **فارس** - Project Lead & Full Stack Developer
+- **حسين** - Frontend Developer
+- **عبدالرحيم** - Backend Developer
 
----
-
-## 📝 الترخيص | License
-
-هذا المشروع مرخص تحت رخصة MIT - انظر ملف [LICENSE](LICENSE) للتفاصيل.
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 📧 التواصل | Contact
 
-- **البريد الإلكتروني | Email:** [your-email@example.com]
+- **البريد الإلكتروني | Email:** [frx9199@gmail.com]
 - **GitHub:** [faris-15](https://github.com/faris-15)
 - **الجامعة | University:** Umm Al-Qura University (UQU)
 
